@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - MONGO_URL=mongodb://mongodb:27017
+      - MONGO_DB_NAME=trip_service_db
+      - DRIVER_SERVICE_URL=http://127.0.0.1:4000/v1
+      - PAYMENT_SERVICE_URL=http://127.0.0.1:4000/v1
+      - RIDER_SERVICE_URL=http://127.0.0.1:4000/v1
+    depends_on:
+      - mongodb
+    networks:
+      - trip-network
+    restart: unless-stopped
+
+  mongodb:
+    image: mongo:6
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - trip-network
+    restart: unless-stopped
+
+networks:
+  trip-network:
+    driver: bridge
+
+volumes:
+  mongodb_data:
