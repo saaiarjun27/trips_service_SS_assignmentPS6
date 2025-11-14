@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: trips-service
+  labels:
+    app: trips-service
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: trips-service
+  template:
+    metadata:
+      labels:
+        app: trips-service
+    spec:
+      containers:
+        - name: trips-service
+          image: saaiarjun27/trips_service:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8000
+              name: http
+          envFrom:
+            - configMapRef:
+                name: trips-config
+            - secretRef:
+                name: trips-secret
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          livenessProbe:
+            httpGet:
+              path: /openapi.json
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /openapi.json
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            failureThreshold: 3

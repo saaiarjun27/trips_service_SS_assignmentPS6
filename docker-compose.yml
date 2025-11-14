@@ -8,9 +8,9 @@ services:
     environment:
       - MONGO_URL=mongodb://mongodb:27017
       - MONGO_DB_NAME=trip_service_db
-      - RIDER_SERVICE_URL=http://172.17.0.1:4000/v1
-      - DRIVER_SERVICE_URL=http://172.17.0.1:4000/v1
-      - PAYMENT_SERVICE_URL=http://172.17.0.1:4000/v1
+      - RIDER_SERVICE_URL=http://172.17.0.1:8080/v1
+      - DRIVER_SERVICE_URL=http://172.17.0.1:3002/
+      - PAYMENT_SERVICE_URL=http://172.17.0.1:8001/
     extra_hosts:
       - "172.17.0.1:host-gateway"
     depends_on:

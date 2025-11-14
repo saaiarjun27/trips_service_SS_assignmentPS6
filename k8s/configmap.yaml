@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: trips-config
+data:
+  DRIVER_SERVICE_URL: "http://driver-service:4000/v1"
+  PAYMENT_SERVICE_URL: "http://payment-service:4000/v1"
+  RIDER_SERVICE_URL: "http://rider-service:4000/v1"
+  MONGO_DB_NAME: "trip_service_db"
